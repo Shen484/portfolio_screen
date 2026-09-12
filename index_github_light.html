@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mahmoud Shabban | Flutter Developer</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --bg: #0B0F19;
+      --card: #111827;
+      --accent: #00F0FF;
+      --text: #F3F4F6;
+      --muted: #9CA3AF;
+      --border: #1F2937;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Cairo', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 8%;
+      background: rgba(11, 15, 25, .88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      font-size: 1.35rem;
+      font-weight: 900;
+    }
+
+    .logo span,
+    .accent { color: var(--accent); }
+
+    nav {
+      display: flex;
+      gap: 25px;
+    }
+
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-weight: 600;
+      transition: .3s;
+    }
+
+    nav a:hover { color: var(--accent); }
+
+    .hero {
+      min-height: 100vh;
+      padding: 120px 8% 70px;
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      align-items: center;
+      gap: 60px;
+    }
+
+    .hero-content .hello {
+      color: var(--muted);
+      font-size: 1.1rem;
+      margin-bottom: 5px;
+    }
+
+    .hero h1 {
+      font-size: clamp(3rem, 7vw, 5.3rem);
+      line-height: 1.08;
+      font-weight: 900;
+      margin-bottom: 18px;
+    }
+
+    .hero-description {
+      color: var(--muted);
+      max-width: 620px;
+      font-size: 1.08rem;
+      line-height: 1.9;
+      margin-bottom: 25px;
+    }
+
+    .social-icons {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 25px;
+      flex-wrap: wrap;
+    }
+
+    .social-icons a {
+      width: 46px;
+      height: 46px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: var(--card);
+      color: var(--text);
+      border: 1px solid var(--border);
+      text-decoration: none;
+      transition: .3s;
+      font-size: 1.1rem;
+    }
+
+    .social-icons a:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+      transform: translateY(-4px);
+      box-shadow: 0 0 22px rgba(0, 240, 255, .2);
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 28px;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 700;
+      border: 2px solid var(--accent);
+      border-radius: 9px;
+      transition: .3s;
+    }
+
+    .btn:hover {
+      background: var(--accent);
+      color: var(--bg);
+      box-shadow: 0 0 25px rgba(0, 240, 255, .35);
+    }
+
+    .hero-image {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .image-frame {
+      width: min(360px, 78vw);
+      height: min(360px, 78vw);
+      border-radius: 50%;
+      overflow: hidden;
+      position: relative;
+      border: 3px solid var(--accent);
+      box-shadow:
+        0 0 0 12px rgba(0, 240, 255, .05),
+        0 0 50px rgba(0, 240, 255, .18);
+      background: var(--card);
+      flex-shrink: 0;
+    }
+
+    .image-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      /* Adjusted for the face to stay naturally centered inside the circle */
+      object-position: 50% 18%;
+      display: block;
+    }
+
+    .image-frame::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: radial-gradient(circle at 50% 35%, transparent 55%, rgba(11, 15, 25, .18) 100%);
+      pointer-events: none;
+    }
+
+    .section {
+      padding: 100px 8%;
+      border-top: 1px solid var(--border);
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 2.4rem;
+      font-weight: 900;
+      margin-bottom: 45px;
+    }
+
+    .about-text {
+      max-width: 900px;
+      margin: auto;
+      color: var(--muted);
+      text-align: center;
+      line-height: 2;
+      font-size: 1.08rem;
+    }
+
+    .skills-grid,
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .skill-card,
+    .project-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      transition: .3s;
+    }
+
+    .skill-card:hover,
+    .project-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-6px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, .18);
+    }
+
+    .skill-card i {
+      color: var(--accent);
+      font-size: 2.4rem;
+      margin-bottom: 18px;
+    }
+
+    .skill-card h3,
+    .project-card h3 {
+      margin-bottom: 10px;
+      font-size: 1.25rem;
+    }
+
+    .project-card p {
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+
+    .project-tech {
+      color: var(--accent);
+      font-size: .88rem;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+
+    .contact {
+      text-align: center;
+    }
+
+    .contact p {
+      color: var(--muted);
+      margin-bottom: 25px;
+    }
+
+    .contact .social-icons {
+      justify-content: center;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 8%;
+      text-align: center;
+      color: var(--muted);
+    }
+
+    @media (max-width: 850px) {
+      nav { display: none; }
+
+      .hero {
+        grid-template-columns: 1fr;
+        text-align: center;
+        padding-top: 110px;
+      }
+
+      .hero-content { order: 2; }
+      .hero-image { order: 1; }
+
+      .social-icons {
+        justify-content: center;
+      }
+
+      .hero-description { margin-left: auto; margin-right: auto; }
+      .image-frame {
+        width: min(320px, 82vw);
+        height: min(320px, 82vw);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">Mahmoud <span>Shabban</span></div>
+
+  <nav>
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-content">
+    <p class="hello">Hello, I'm</p>
+
+    <h1>Mahmoud <span class="accent">Shabban</span></h1>
+
+    <p class="hero-description">
+      Cross-Platform Mobile Application Developer specializing in Flutter & Dart.
+      Computer Science student at Fayoum University and trainee at DEPI & ITI.
+    </p>
+
+    <div class="social-icons">
+      <a href="https://www.linkedin.com/in/mahmoud-shabban-672b77430?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank" title="LinkedIn">
+        <i class="fa-brands fa-linkedin-in"></i>
+      </a>
+
+      <a href="https://www.facebook.com/Mahmoud.Shabban995" target="_blank" title="Facebook">
+        <i class="fa-brands fa-facebook-f"></i>
+      </a>
+
+      <a href="https://wa.me/201033834771" target="_blank" title="WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+      </a>
+
+      <a href="https://www.instagram.com/mahmoudshabban22?igsh=MWk5MGg5cngxdW04OA==" target="_blank" title="Instagram">
+        <i class="fa-brands fa-instagram"></i>
+      </a>
+    </div>
+
+    <a href="#projects" class="btn">Explore My Work</a>
+  </div>
+
+  <div class="hero-image">
+    <div class="image-frame">
+      <img src="https://github.com/Shen484.png" alt="Mahmoud Shabban">
+    </div>
+  </div>
+</section>
+
+<section id="about" class="section">
+  <h2 class="section-title">About <span class="accent">Me</span></h2>
+
+  <p class="about-text">
+    I am a passionate Computer Science student at Fayoum University with a deep focus
+    on mobile application development. Currently enhancing my expertise through
+    professional training programs at Digital Egypt Pioneers Initiative (DEPI) and
+    Information Technology Institute (ITI). I specialize in building high-performance,
+    beautiful cross-platform applications using Flutter and Dart, with solid foundations
+    in OOP, Java, and database management.
+  </p>
+</section>
+
+<section id="skills" class="section">
+  <h2 class="section-title">Technical <span class="accent">Skills</span></h2>
+
+  <div class="skills-grid">
+    <div class="skill-card">
+      <i class="fa-brands fa-flutter"></i>
+      <h3>Flutter & Dart</h3>
+      <p>Building cross-platform mobile applications and responsive user interfaces.</p>
+    </div>
+
+    <div class="skill-card">
+      <i class="fa-solid fa-mobile-screen-button"></i>
+      <h3>Responsive UI</h3>
+      <p>Creating clean mobile layouts using Row, Column, Stack, Expanded, ListView, and reusable widgets.</p>
+    </div>
+
+    <div class="skill-card">
+      <i class="fa-solid fa-layer-group"></i>
+      <h3>State Management</h3>
+      <p>Understanding application state and organizing Flutter screens and components.</p>
+    </div>
+
+    <div class="skill-card">
+      <i class="fa-solid fa-cubes"></i>
+      <h3>Widget Development</h3>
+      <p>Building reusable and custom Flutter widgets for scalable application interfaces.</p>
+    </div>
+
+    <div class="skill-card">
+      <i class="fa-solid fa-code"></i>
+      <h3>OOP</h3>
+      <p>Applying Object-Oriented Programming concepts such as encapsulation, inheritance, polymorphism, and abstraction.</p>
+    </div>
+
+    <div class="skill-card">
+      <i class="fa-brands fa-java"></i>
+      <h3>Java</h3>
+      <p>Developing applications with Java and applying strong programming fundamentals.</p>
+    </div>
+
+    <div class="skill-card">
+      <i class="fa-solid fa-desktop"></i>
+      <h3>JavaFX</h3>
+      <p>Building desktop application interfaces and working with JavaFX components.</p>
+    </div>
+
+    <div class="skill-card">
+      <i class="fa-solid fa-database"></i>
+      <h3>SQL</h3>
+      <p>Writing queries and managing structured data with relational databases.</p>
+    </div>
+
+    <div class="skill-card">
+      <i class="fa-solid fa-server"></i>
+      <h3>MySQL</h3>
+      <p>Working with relational databases, tables, relationships, and CRUD operations.</p>
+    </div>
+
+    <div class="skill-card">
+      <i class="fa-solid fa-hard-drive"></i>
+      <h3>SQLite</h3>
+      <p>Using lightweight local databases for application data storage and management.</p>
+    </div>
+
+    <div class="skill-card">
+      <i class="fa-solid fa-gears"></i>
+      <h3>CRUD Operations</h3>
+      <p>Implementing Create, Read, Update, and Delete functionality in applications and databases.</p>
+    </div>
+
+    <div class="skill-card">
+      <i class="fa-solid fa-bug"></i>
+      <h3>Problem Solving</h3>
+      <p>Debugging code, fixing layout issues, and improving application functionality.</p>
+    </div>
+  </div>
+</section>
+
+<section id="projects" class="section">
+  <h2 class="section-title">Featured <span class="accent">Projects</span></h2>
+
+  <div class="projects-grid">
+
+    <article class="project-card">
+      <h3>Instagram UI Clone</h3>
+      <p class="project-tech">Flutter • Dart • UI Design</p>
+      <p>
+        A custom Flutter UI inspired by Instagram featuring sign-up screens,
+        form validation, custom typography, reusable widgets, and asset integration.
+      </p>
+      <a href="#" class="btn">View Project</a>
+    </article>
+
+    <article class="project-card">
+      <h3>Snapchat UI Layout</h3>
+      <p class="project-tech">Flutter • ListView • Stack</p>
+      <p>
+        Interactive mobile layouts inspired by Snapchat using advanced Flutter widgets
+        such as ListView, Stack, and reusable custom components.
+      </p>
+      <a href="#" class="btn">View Project</a>
+    </article>
+
+    <article class="project-card">
+      <h3>Profile UI Application</h3>
+      <p class="project-tech">Flutter • Responsive UI • Widgets</p>
+      <p>
+        A modern profile interface built with Flutter, focusing on responsive layouts,
+        circular images, custom cards, gradients, icons, and clean component structure.
+      </p>
+      <a href="#" class="btn">View Project</a>
+    </article>
+
+    <article class="project-card">
+      <h3>Mobile UI Components</h3>
+      <p class="project-tech">Flutter • Dart • UI Implementation</p>
+      <p>
+        A collection of mobile interface screens created to practice building modern
+        application layouts using Row, Column, Expanded, Stack, Container, and custom widgets.
+      </p>
+      <a href="#" class="btn">View Project</a>
+    </article>
+
+    <article class="project-card">
+      <h3>Student Management System</h3>
+      <p class="project-tech">Java • OOP • SQL • Database</p>
+      <p>
+        A student management application designed to store and manage student information.
+        Includes adding, updating, deleting, and retrieving student records from a database.
+      </p>
+      <a href="#" class="btn">View Project</a>
+    </article>
+
+    <article class="project-card">
+      <h3>Order Management System</h3>
+      <p class="project-tech">Java • OOP • SQL • CRUD</p>
+      <p>
+        An application designed to manage customer orders and store related information
+        while applying CRUD operations, Object-Oriented Programming, and database management.
+      </p>
+      <a href="#" class="btn">View Project</a>
+    </article>
+
+    <article class="project-card">
+      <h3>Student Database Application</h3>
+      <p class="project-tech">Java • SQL • MySQL</p>
+      <p>
+        A database-focused application for organizing student data and performing
+        operations such as inserting, searching, editing, and deleting records.
+      </p>
+      <a href="#" class="btn">View Project</a>
+    </article>
+
+    <article class="project-card">
+      <h3>Desktop Management Application</h3>
+      <p class="project-tech">Java • JavaFX • OOP</p>
+      <p>
+        A desktop application interface developed with JavaFX, focusing on graphical
+        user interfaces, form handling, data management, and Object-Oriented Programming.
+      </p>
+      <a href="#" class="btn">View Project</a>
+    </article>
+
+  </div>
+</section>
+
+<section id="contact" class="section contact">
+  <h2 class="section-title">Let's Build <span class="accent">Together</span></h2>
+
+  <p>
+    Feel free to reach out for opportunities, collaborations, freelance projects,
+    or just a friendly chat.
+  </p>
+
+  <div class="social-icons">
+    <a href="https://www.linkedin.com/in/mahmoud-shabban-672b77430?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank">
+      <i class="fa-brands fa-linkedin-in"></i>
+    </a>
+
+    <a href="https://www.facebook.com/Mahmoud.Shabban995" target="_blank">
+      <i class="fa-brands fa-facebook-f"></i>
+    </a>
+
+    <a href="https://wa.me/201033834771" target="_blank">
+      <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <a href="https://www.instagram.com/mahmoudshabban22?igsh=MWk5MGg5cngxdW04OA==" target="_blank">
+      <i class="fa-brands fa-instagram"></i>
+    </a>
+  </div>
+
+  <a href="https://wa.me/201033834771" target="_blank" class="btn">Get In Touch</a>
+</section>
+
+<footer>
+  Designed & Built by Mahmoud Shabban © 2026
+</footer>
+
+</body>
+</html>
